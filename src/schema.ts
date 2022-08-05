@@ -1,10 +1,12 @@
+/* eslint-disable import/exports-last */
+
 // Spartan Schema
 // Copyright © 2021-2022 Adam Nelson <adam@nels.onl>
 // Copyright © 2022 Dániel Földi
 // Distributed under the Blue Oak Model License
 
-import isPlainObject from './isPlainObject.ts'
-import { PathArray } from './path.ts'
+import isPlainObject from './isPlainObject'
+import { PathArray } from './path'
 
 /**
  * The type of valid Spartan Schemas.
@@ -15,6 +17,7 @@ import { PathArray } from './path.ts'
  */
 export interface Schema {
   readonly spartan?: 1
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly let?: { readonly [key: string]: SchemaType }
   readonly schema: SchemaType
 }
@@ -43,8 +46,8 @@ export type SchemaType =
   | { readonly [key: string]: SchemaType | readonly ['optional', SchemaType] }
 
 export interface SchemaError {
-  readonly message: string
   readonly location: PathArray
+  readonly message: string
 }
 
 const strlen = /string\((\d*),(\d*)\)/
@@ -713,6 +716,7 @@ function matchesSchemaType<
         return value => ArrayBuffer.isView(value)
       default:
         if (typeof schema === 'string' && strlen.test(schema)) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const [ min, max ] = schema.match(strlen)!.slice(1).map(s => Number.parseInt(s, 10))
           return value => typeof value === 'string' && value.length >= min && value.length <= max
         }

@@ -4,8 +4,11 @@
     "target": "ES2022",
     "strict": true,
     "alwaysStrict": true,
+    "allowJs": false,
     "moduleResolution": "Node",
     "sourceMap": true,
-    "isolatedModules": true
-  }
+    "isolatedModules": true,
+    "declaration": true
+  },
+  "include": ["src/**/*.ts"],
 }
