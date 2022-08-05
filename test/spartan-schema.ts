@@ -130,7 +130,7 @@ function expectOneError(schema: unknown, errorLocation: PathArray) {
   const errors: SchemaError[] = []
   const valid = isSchema(schema, errors)
   expect(errors).to.have.length(1)
-  expect(errors[0].location).to.equal(errorLocation)
+  expect(errors[0].location).to.deep.equal(errorLocation)
   expect(valid).to.equal(false)
 }
 
@@ -139,7 +139,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(personSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('matches a basic object', () => {
@@ -163,7 +163,7 @@ describe('Spartan Schema', () => {
       expectNotToMatch(personSchema, [ 'Adam', 'Nelson', 31 ])
     })
     it('has a zero value', () => {
-      expect(zeroValue(personSchema)).to.equal({
+      expect(zeroValue(personSchema)).to.deep.equal({
         firstName: '',
         lastName: '',
         age: 0
@@ -175,7 +175,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(pathSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('matches various paths', () => {
@@ -193,7 +193,7 @@ describe('Spartan Schema', () => {
       expectNotToMatch(pathSchema, [ Number.NaN ])
     })
     it('has a zero value', () => {
-      expect(zeroValue(pathSchema)).to.equal([])
+      expect(zeroValue(pathSchema)).to.deep.equal([])
     })
   })
 
@@ -201,7 +201,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(stoplightSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('matches enum values', () => {
@@ -213,7 +213,7 @@ describe('Spartan Schema', () => {
       expectNotToMatch(stoplightSchema, { stoplight: 'blue' })
     })
     it('has a zero value', () => {
-      expect(zeroValue(stoplightSchema)).to.equal({ stoplight: 'red' })
+      expect(zeroValue(stoplightSchema)).to.deep.equal({ stoplight: 'red' })
     })
   })
 
@@ -221,7 +221,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(primitivesSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     const matchingObject = {
@@ -283,7 +283,7 @@ describe('Spartan Schema', () => {
       })
     })
     it('has a zero value', () => {
-      expect(zeroValue(primitivesSchema)).to.equal({
+      expect(zeroValue(primitivesSchema)).to.deep.equal({
         null1: null,
         null2: null,
         boolean: false,
@@ -301,7 +301,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(tuplesSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('matches array prefix without suffix', () => {
@@ -316,7 +316,7 @@ describe('Spartan Schema', () => {
       ])
     })
     it('has a zero value', () => {
-      expect(zeroValue(refSchema)).to.equal({
+      expect(zeroValue(refSchema)).to.deep.equal({
         fruits: [],
         vegetables: []
       })
@@ -327,7 +327,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(refSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('matches a simple object', () => {
@@ -337,7 +337,7 @@ describe('Spartan Schema', () => {
       })
     })
     it('has a zero value', () => {
-      expect(zeroValue(refSchema)).to.equal({
+      expect(zeroValue(refSchema)).to.deep.equal({
         fruits: [],
         vegetables: []
       })
@@ -348,7 +348,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(infiniteSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('throws an exception when used with zeroValue', () => {
@@ -361,7 +361,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(lengthSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('allows strings of the minimum length', () => {
@@ -382,7 +382,7 @@ describe('Spartan Schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
       const valid = isSchema(spartanSchemaSchema, errors)
-      expect(errors).to.equal([])
+      expect(errors).to.deep.equal([])
       expect(valid).to.equal(true)
     })
     it('matches the other schemas', () => {
@@ -396,7 +396,7 @@ describe('Spartan Schema', () => {
       expectToMatch(spartanSchemaSchema)(spartanSchemaSchema)
     })
     it('has a zero value', () => {
-      expect(zeroValue(spartanSchemaSchema)).to.equal({ schema: null })
+      expect(zeroValue(spartanSchemaSchema)).to.deep.equal({ schema: null })
     })
   })
 

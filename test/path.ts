@@ -5,10 +5,10 @@ import { pathToString } from '../src/path'
 
 describe('PathArray', () => {
   it('can be rendered as a string', () => {
-    expect(pathToString([])).toEqual('$')
-    expect(pathToString([ 1, 2, 3 ])).toEqual('$[1][2][3]')
-    expect(pathToString([ 'foo', 'bar', 'baz' ])).toEqual('$.foo.bar.baz')
-    expect(pathToString([ '1' ])).toEqual('$["1"]')
-    expect(pathToString([ 'foo_bar', 'baz-qux' ])).toEqual('$.foo_bar["baz-qux"]')
+    expect(pathToString([])).to.equal('$')
+    expect(pathToString([ 1, 2, 3 ])).to.equal('$[1][2][3]')
+    expect(pathToString([ 'foo', 'bar', 'baz' ])).to.equal('$.foo.bar.baz')
+    expect(pathToString([ '1' ])).to.equal('$["1"]')
+    expect(pathToString([ 'foo_bar', 'baz-qux' ])).to.equal('$.foo_bar["baz-qux"]')
   })
 })
