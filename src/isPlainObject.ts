@@ -43,24 +43,24 @@ const objectTag = '[object Object]',
   hasOwnProperty = objectProto.hasOwnProperty,
   objectCtorString = funcToString.call(Object),
   objectToString = objectProto.toString,
-  getPrototype = (x: unknown) => Object.getPrototypeOf(Object(x));
+  getPrototype = (x: unknown) => Object.getPrototypeOf(new Object(x))
 
 function isObjectLike(value: unknown): boolean {
-  return !!value && typeof value === 'object';
+  return !!value && typeof value === 'object'
 }
 
 export default function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (!isObjectLike(value) || objectToString.call(value) !== objectTag) {
-    return false;
+    return false
   }
-  const proto = getPrototype(value);
+  const proto = getPrototype(value)
   if (proto === null) {
-    return true;
+    return true
   }
-  const Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+  const Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor
   return (
-    typeof Ctor === 'function' &&
-    Ctor instanceof Ctor &&
-    funcToString.call(Ctor) === objectCtorString
-  );
+    typeof Ctor === 'function'
+    && Ctor instanceof Ctor
+    && funcToString.call(Ctor) === objectCtorString
+  )
 }

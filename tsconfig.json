@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "lib": ["ES2022"],
+    "lib": [ "ES2022" ],
     "target": "ES2022",
     "strict": true,
     "alwaysStrict": true,
     "moduleResolution": "Node",
     "sourceMap": true,
     "isolatedModules": true
-  },
+  }
 }
