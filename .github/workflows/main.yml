@@ -67,9 +67,7 @@ jobs:
     - name: Install dependencies
       run: |
         npm ci --no-progress
-    - name: Prepare nuxt types
-      run: |
-        npm run prepare
+
     - name: Run task
       run: |
         npm run typecheck
