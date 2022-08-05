@@ -1,5 +1,8 @@
 # Spartan Schema
 
+_This is a hard fork of `spartan-schema`, with changes that better suit my
+workflow, and added features that I felt like were needed.
+
 An ultra-minimal, Typescript-compatible alternative to [JSON
 Schema][json-schema], designed as part of [Osmosis][osmosis].
 
@@ -361,6 +364,7 @@ May throw an exception if the schema type is infinitely recursive.
 ## License
 
 Copyright &copy; 2021-2022 Adam Nelson
+Copyright &copy; 2022 Dániel Földi
 
 Spartan Schema is distributed under the [Blue Oak Model License][blue-oak]. It
 is a MIT/BSD-style license, but with [some clarifying
