@@ -20,6 +20,7 @@ export interface Schema {
 }
 
 export type SchemaType =
+  `string(${number},${number})`
   | null
   | 'null'
   | 'boolean'
@@ -45,6 +46,8 @@ export interface SchemaError {
   readonly message: string;
   readonly location: PathArray;
 }
+
+const strlen = /string\((\d*),(\d*)\)/
 
 function isSchemaType(
   schema: unknown,
@@ -205,6 +208,9 @@ function isSchemaType(
       case 'binary':
         return true;
       default:
+        if (strlen.test(schema)) {
+          return true
+        }
         errors &&
           errors.push({
             message: `Unknown scalar type: ${JSON.stringify(schema)}`,
@@ -578,6 +584,7 @@ export type MatchesSchemaType<
   : S extends null | 'null' ? null
   : S extends 'boolean' ? boolean
   : S extends 'integer' | 'float' | 'number' ? number
+  : S extends `string(${number},${number})` ? string
   : S extends 'string' ? string
   : S extends 'date' ? Date
   : S extends 'binary' ? Uint8Array
@@ -709,6 +716,13 @@ function matchesSchemaType<
         return (value) => value instanceof Date;
       case 'binary':
         return (value) => ArrayBuffer.isView(value);
+      default:
+        if (typeof schema === 'string') {
+          if (strlen.test(schema)) {
+            const [min, max] = schema.match(strlen)!.slice(1).map((s) => parseInt(s, 10));
+            return (value) => typeof value === 'string' && value.length >= min && value.length <= max;
+          }
+        }
     }
   }
   return () => false;
