@@ -152,9 +152,6 @@ jobs:
       contents: read
       security-events: write
 
-    needs:
-    - build
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
