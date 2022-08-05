@@ -1,5 +1,5 @@
-# Spartan Schema in Spartan Schema (in YAML)
-# This schema defines the Spartan Schema language itself
+# (Original) Spartan Schema in Spartan Schema (in YAML)
+# This schema defines the (Original) Spartan Schema language itself
 spartan: 1
 let:
   EnumValue: [oneof, null, boolean, number, string]
