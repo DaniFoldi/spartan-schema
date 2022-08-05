@@ -1,6 +1,6 @@
-import { describe, it } from 'https://deno.land/x/deno_mocha/mod.ts';
-import { expect } from 'https://deno.land/x/expect/mod.ts';
-import { pathToString } from '../mod.ts';
+import { describe, it } from 'mocha';
+import { expect } from 'chai';
+import { pathToString } from '../src/path';
 
 describe('PathArray', () => {
   it('can be rendered as a string', () => {

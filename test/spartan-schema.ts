@@ -1,14 +1,14 @@
-import { describe, it } from 'https://deno.land/x/deno_mocha/mod.ts';
-import { expect } from 'https://deno.land/x/expect/mod.ts';
+import { describe, it } from 'mocha';
+import { expect } from 'chai';
 import {
   isSchema,
   MatchesSchema,
   matchesSchema,
-  PathArray,
   Schema,
   SchemaError,
   zeroValue,
-} from '../mod.ts';
+} from '../src/schema';
+import { PathArray } from '../src/path'
 
 const personSchema = {
   schema: {
@@ -66,6 +66,12 @@ const tuplesSchema = {
 const infiniteSchema = {
   let: { Forever: { loop: ['ref', 'Forever'] } },
   schema: ['ref', 'Forever'],
+} as const;
+
+const lengthSchema = {
+  schema: {
+      test: 'string(3,5)'
+  }
 } as const;
 
 const spartanSchemaSchema = {
@@ -340,6 +346,28 @@ describe('Spartan Schema', () => {
       );
     });
   });
+
+
+  describe('length schema', () => {
+    it('is a valid schema', () => {
+        const errors = [];
+        const valid = isSchema(lengthSchema, errors);
+        expect(errors).toEqual([]);
+        expect(valid).toBe(true);
+    });
+    it('allows strings of the minimum length', () => {
+        expectToMatch(lengthSchema)({test: 'foo'});
+    });
+    it('allows strings of the maximum length', () => {
+        expectToMatch(lengthSchema)({test: 'foooo'});
+    });
+    it('rejects strings below the minimum length', () => {
+        expectNotToMatch(lengthSchema, {test: 'fo'});
+    });
+    it('rejects strings above the maximum length', () => {
+        expectNotToMatch(lengthSchema, {test: 'fooooo'});
+    });
+});
 
   describe('Spartan Schema recursive schema', () => {
     it('is a valid schema', () => {
