@@ -1,4 +1,6 @@
+.github/
 src/
 test/
 
+.eslint*
 tsconfig.json
