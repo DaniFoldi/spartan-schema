@@ -1,4 +1,4 @@
-/* eslint-disable sort-keys */
+
 
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
@@ -6,7 +6,7 @@ import {
   isSchema,
   SchemaError
 } from '../src/schema'
-import {expectToMatch, expectNotToMatch} from './spartan-schema'
+import { expectToMatch, expectNotToMatch } from './spartan-schema'
 
 
 const lengthSchema = {
