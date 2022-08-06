@@ -1,6 +1,6 @@
 {
   "name": "@danifoldi/spartan-schema",
-  "version": "1.1.2-beta",
+  "version": "1.1.2",
   "description": "A fork of spartan-schema with some new features",
   "type": "module",
   "scripts": {
@@ -10,6 +10,30 @@
     "test": "ts-mocha test/**/*.ts",
     "typecheck": "tsc --noEmit"
   },
+  "author": "ar-nelson",
+  "contributors": ["DaniFoldi"],
+  "bugs": {
+    "url": "https://github.com/DaniFoldi/spartan-schema/issues"
+  },
+  "homepage": "https://github.com/DaniFoldi/spartan-schema#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaniFoldi/spartan-schema.git"
+  },
+  "keywords": [
+    "schema",
+    "json schema",
+    "static schema",
+    "schema type",
+    "type",
+    "typed schema",
+    "schema validation",
+    "validator",
+    "jsonschema",
+    "json",
+    "json-schema",
+    "json validation",
+  ],
   "license": "BlueOak-1.0.0",
   "devDependencies": {
     "@danifoldi/eslint-plugin-eslint-presets": "^1.6.0",
@@ -32,7 +56,9 @@
   },
   "exports": {
     ".": "./dist/schema.js",
-    "./dist/*": "./dist/*"
+    "./dist/schema": "./dist/schema.js",
+    "./dist/path": "./dist/path.js",
+    "./dist/isPlainObject": "./dist/isPlainObject.js"
   },
   "overrides": {
     "typescript": "^4.8.0-beta"
