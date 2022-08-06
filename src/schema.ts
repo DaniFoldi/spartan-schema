@@ -2,7 +2,7 @@
 
 // Spartan Schema
 // Copyright © 2021-2022 Adam Nelson <adam@nels.onl>
-// Copyright © 2022 Dániel Földi
+// Portions Copyright © 2022 Dániel Földi
 // Distributed under the Blue Oak Model License
 
 import isPlainObject from './isPlainObject'

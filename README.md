@@ -1,7 +1,6 @@
 # Spartan Schema
 
-_This is a hard fork of `spartan-schema`, with changes that better suit my
-workflow, and added features that I felt like were needed.
+_This is a fork of `spartan-schema`, with changes that better suit my workflow, and added features that I felt like were missing._
 
 An ultra-minimal, Typescript-compatible alternative to [JSON
 Schema][json-schema], designed as part of [Osmosis][osmosis].
@@ -96,20 +95,7 @@ Schema][json-schema], designed as part of [Osmosis][osmosis].
 
 ## Usage
 
-Spartan Schema is compatible with both Node and Deno, and has no dependencies.
-
-The repository is written in Deno-compatible Typescript. `mod.ts` can be
-imported directly:
-
-```typescript
-import {
-  Schema,
-  matchesSchema
-} from 'https://raw.githubusercontent.com/ar-nelson/spartan-schema/v1.0.0/mod.ts';
-```
-
-The Node module is built with [`dnt`][dnt], and is available on NPM as
-`spartan-schema`:
+You can install the package with `npm i @danifoldi/spartan-schema`.
 
 ```typescript
 import {
@@ -117,9 +103,6 @@ import {
   matchesSchema
 } from 'spartan-schema';
 ```
-
-All `deno` build commands are documented in the Makefile. To run the test suite
-and build the Node module, just run `make` (requires Deno).
 
 ## The Schema Language
 
@@ -363,8 +346,8 @@ May throw an exception if the schema type is infinitely recursive.
 
 ## License
 
-Copyright &copy; 2021-2022 Adam Nelson
-Copyright &copy; 2022 Dániel Földi
+Copyright &copy; 2021-2022 Adam Nelson<br>
+Portions Copyright &copy; 2022 Dániel Földi
 
 Spartan Schema is distributed under the [Blue Oak Model License][blue-oak]. It
 is a MIT/BSD-style license, but with [some clarifying
