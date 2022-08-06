@@ -71,12 +71,6 @@ const infiniteSchema = {
   schema: [ 'ref', 'Forever' ]
 } as const
 
-const lengthSchema = {
-  schema: {
-    test: 'string(3,5)'
-  }
-} as const
-
 const spartanSchemaSchema = {
   spartan: 1,
   let: {
@@ -117,14 +111,6 @@ const spartanSchemaSchema = {
     schema: [ 'ref', 'Type' ]
   }
 } as const
-
-function expectToMatch<S extends Schema>(schema: S): (v: MatchesSchema<S>) => void {
-  return (value: MatchesSchema<S>) => expect(matchesSchema(schema)(value)).to.equal(true)
-}
-
-function expectNotToMatch(schema: Schema, value: unknown): void {
-  expect(matchesSchema(schema)(value)).to.equal(false)
-}
 
 function expectOneError(schema: unknown, errorLocation: PathArray) {
   const errors: SchemaError[] = []
@@ -356,28 +342,6 @@ describe('Spartan Schema', () => {
     })
   })
 
-
-  describe('length schema', () => {
-    it('is a valid schema', () => {
-      const errors: SchemaError[] = []
-      const valid = isSchema(lengthSchema, errors)
-      expect(errors).to.deep.equal([])
-      expect(valid).to.equal(true)
-    })
-    it('allows strings of the minimum length', () => {
-      expectToMatch(lengthSchema)({ test: 'foo' })
-    })
-    it('allows strings of the maximum length', () => {
-      expectToMatch(lengthSchema)({ test: 'foooo' })
-    })
-    it('rejects strings below the minimum length', () => {
-      expectNotToMatch(lengthSchema, { test: 'fo' })
-    })
-    it('rejects strings above the maximum length', () => {
-      expectNotToMatch(lengthSchema, { test: 'fooooo' })
-    })
-  })
-
   describe('Spartan Schema recursive schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
@@ -488,3 +452,11 @@ describe('Spartan Schema', () => {
     })
   })
 })
+
+export function expectToMatch<S extends Schema>(schema: S): (v: MatchesSchema<S>) => void {
+  return (value: MatchesSchema<S>) => expect(matchesSchema(schema)(value)).to.equal(true)
+}
+
+export function expectNotToMatch(schema: Schema, value: unknown): void {
+  expect(matchesSchema(schema)(value)).to.equal(false)
+}
