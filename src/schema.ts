@@ -24,6 +24,9 @@ export interface Schema {
 
 export type SchemaType =
   `string(${number},${number})`
+  | `number(${number},${number})`
+  | `float(${number},${number})`
+  | `integer(${number},${number})`
   | null
   | 'null'
   | 'boolean'
@@ -50,7 +53,10 @@ export interface SchemaError {
   readonly message: string
 }
 
-const strlen = /string\((\d*),(\d*)\)/
+const strlen = /string\((\d+),(\d+)\)/
+const numinterval = /number\((-?\d+\.?\d*),(-?\d+\.?\d*)\)/
+const floatinterval = /float\((-?\d+\.?\d*),(-?\d+\.?\d*)\)/
+const intinterval = /integer\((-?\d+),(-?\d+)\)/
 
 function isSchemaType(
   schema: unknown,
@@ -209,7 +215,7 @@ function isSchemaType(
       case 'binary':
         return true
       default:
-        if (strlen.test(schema)) {
+        if (strlen.test(schema) || numinterval.test(schema) || floatinterval.test(schema) || intinterval.test(schema)) {
           return true
         }
         errors
@@ -584,6 +590,9 @@ export type MatchesSchemaType<
   : S extends 'boolean' ? boolean
   : S extends 'integer' | 'float' | 'number' ? number
   : S extends `string(${number},${number})` ? string
+  : S extends `number(${number},${number})` ? number
+  : S extends `float(${number},${number})` ? number
+  : S extends `integer(${number},${number})` ? number
   : S extends 'string' ? string
   : S extends 'date' ? Date
   : S extends 'binary' ? Uint8Array
@@ -715,10 +724,24 @@ function matchesSchemaType<
       case 'binary':
         return value => ArrayBuffer.isView(value)
       default:
-        if (typeof schema === 'string' && strlen.test(schema)) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const [ min, max ] = schema.match(strlen)!.slice(1).map(s => Number.parseInt(s, 10))
-          return value => typeof value === 'string' && value.length >= min && value.length <= max
+        if (typeof schema === 'string') {
+          if (strlen.test(schema)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const [ min, max ] = schema.match(strlen)!.slice(1).map(s => Number.parseInt(s, 10))
+            return value => typeof value === 'string' && value.length >= min && value.length <= max
+          } else if (intinterval.test(schema)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const [ min, max ] = schema.match(intinterval)!.slice(1).map(s => Number.parseInt(s, 10))
+            return value => typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max
+          } else if (numinterval.test(schema)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const [ min, max ] = schema.match(numinterval)!.slice(1).map(s => Number.parseFloat(s))
+            return value => typeof value === 'number' && value >= min && value <= max
+          } else if (floatinterval.test(schema)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const [ min, max ] = schema.match(floatinterval)!.slice(1).map(s => Number.parseFloat(s))
+            return value => typeof value === 'number' && value >= min && value <= max
+          }
         }
     }
   }
