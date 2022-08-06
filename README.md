@@ -126,6 +126,10 @@ properties are allowed, and will be ignored.
   `"boolean"`, `null`.
   - `"float"` is an alias for `"number"`.
   - `"null"` can also be written as the literal value `null`.
+  - `"string(min,max)" is a string with length at least min, and at most max (inclusive).
+  - `"number(min,max)" is a number greater than or equal to min, and less than or equal to max.
+  - `"integer(min,max)" is an integer greater than or equal to min, and less than or equal to max.
+  - `"float(min,max)" is a float greater than or equal to min, and less than or equal to max.
 - Object type: An object whose keys are schema types. Matches an object with
   all of the included keys, if those keys' values match their schema types.
   - Unspecified keys are allowed, and will not be checked.
