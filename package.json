@@ -32,7 +32,7 @@
     "jsonschema",
     "json",
     "json-schema",
-    "json validation",
+    "json validation"
   ],
   "license": "BlueOak-1.0.0",
   "devDependencies": {
