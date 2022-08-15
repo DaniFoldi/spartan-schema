@@ -298,7 +298,7 @@ export function isSchema(
 
 }
 
-type MatchesObject<
+export type MatchesObject<
   S extends {
     readonly [key: string]: SchemaType | readonly ['optional', SchemaType]
   },
