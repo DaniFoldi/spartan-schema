@@ -33,7 +33,25 @@ const floatSchema = {
   }
 } as const
 
+const fileSchema = {
+  schema: {
+    test: 'file'
+  }
+} as const
+
+class MockClass {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(..._args: unknown[]) {
+    //
+  }
+}
+
 describe('new schemas', () => {
+  before(function() {
+    // @ts-expect-error set up mock File class
+    if (globalThis.File === undefined) globalThis.File = MockClass
+  })
+
   describe('length schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
@@ -115,6 +133,21 @@ describe('new schemas', () => {
     })
     it('rejects numbers above the maximum', () => {
       expectNotToMatch(numberSchema, { test: 5.5 })
+    })
+  })
+
+  describe('file schema', () => {
+    it('is a valid schema', () => {
+      const errors: SchemaError[] = []
+      const valid = isSchema(fileSchema, errors)
+      expect(errors).to.deep.equal([])
+      expect(valid).to.equal(true)
+    })
+    it('allows valid files', () => {
+      expectToMatch(fileSchema)({ test: new File([], 'unknown') })
+    })
+    it('rejects non-files', () => {
+      expectNotToMatch(fileSchema, { test: new Uint8Array() })
     })
   })
 })
