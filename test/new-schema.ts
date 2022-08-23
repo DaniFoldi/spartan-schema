@@ -40,17 +40,18 @@ const fileSchema = {
 } as const
 
 class MockClass {
-  constructor(...args: unknown[]) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(..._args: unknown[]) {
     //
   }
 }
 
-before(() => {
-  // @ts-expect-error set up mock File class
-  if (globalThis.File === undefined) globalThis.File = MockClass
-})
-
 describe('new schemas', () => {
+  before(function() {
+    // @ts-expect-error set up mock File class
+    if (globalThis.File === undefined) globalThis.File = MockClass
+  })
+
   describe('length schema', () => {
     it('is a valid schema', () => {
       const errors: SchemaError[] = []
