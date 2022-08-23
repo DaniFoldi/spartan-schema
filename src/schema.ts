@@ -36,6 +36,7 @@ export type SchemaType =
   | 'string'
   | 'date'
   | 'binary'
+  | 'file'
   | readonly [
     'enum',
     string | number | boolean | null,
@@ -213,6 +214,7 @@ function isSchemaType(
       case 'string':
       case 'date':
       case 'binary':
+      case 'file':
         return true
       default:
         if (strlen.test(schema) || numinterval.test(schema) || floatinterval.test(schema) || intinterval.test(schema)) {
@@ -596,6 +598,7 @@ export type MatchesSchemaType<
   : S extends 'string' ? string
   : S extends 'date' ? Date
   : S extends 'binary' ? Uint8Array
+  : S extends 'file' ? File
   : S extends readonly ['enum', ...infer Values] ? Values[number]
   : S extends readonly ['tuple', ...infer Props] ? MatchesTuple<Props, Refs>
   : S extends readonly ['array', ...infer Props] ? MatchesArray<Props, Refs>
@@ -723,6 +726,8 @@ function matchesSchemaType<
         return value => value instanceof Date
       case 'binary':
         return value => ArrayBuffer.isView(value)
+      case 'file':
+        return value => value instanceof File
       default:
         if (typeof schema === 'string') {
           if (strlen.test(schema)) {
@@ -793,6 +798,8 @@ function typeZeroValue(
         return new Date(0)
       case 'binary':
         return new Uint8Array()
+      case 'file':
+        return new File([], 'unknown')
       default:
         return undefined
     }
@@ -838,6 +845,7 @@ function typeZeroValue(
  * | integer, float | `0`                                           |
  * | string         | `""`                                          |
  * | binary         | `0`-length `Uint8Array`                       |
+ * | file           | empty file                                    |
  * | date           | `new Date(0)` (Jan 1, 1970)                   |
  * | object         | object populated with properties' zero values |
  * | `oneof`        | zero value of first type                      |
